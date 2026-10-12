@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --brand-bg: #080914;
+    --brand-surface: #0E1020;
+    --brand-card: #14172A;
+    --brand-blue: #4263FF;
+    --brand-electric: #38BDF8;
+    --brand-violet: #8B5CF6;
+    --brand-lavender: #B7A0FF;
+  }
+
+  body {
+    background-color: #080914;
+    color: #F8FAFC;
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#4263FF] via-[#8B5CF6] to-[#38BDF8];
+  }
+
+  .text-gradient-purple {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#8B5CF6] via-[#B7A0FF] to-[#38BDF8];
+  }
+
+  .text-gradient-subtle {
+    @apply bg-clip-text text-transparent bg-gradient-to-b from-[#FFFFFF] to-[#A5ADC2];
+  }
+
+  .glass-card {
+    background: rgba(20, 23, 42, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-card-hover {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .glass-card-hover:hover {
+    background: rgba(26, 30, 56, 0.85);
+    border-color: rgba(139, 92, 246, 0.35);
+    box-shadow: 0 10px 30px -10px rgba(66, 99, 255, 0.25);
+    transform: translateY(-3px);
+  }
+
+  .grid-pattern {
+    background-size: 36px 36px;
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  }
+
+  .subtle-radial-bg {
+    background: radial-gradient(circle 800px at 50% -100px, rgba(66, 99, 255, 0.12), transparent 70%);
+  }
+
+  .purple-radial-bg {
+    background: radial-gradient(circle 600px at 80% 20%, rgba(139, 92, 246, 0.08), transparent 60%);
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .neon-glow-violet {
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.4), inset 0 0 15px rgba(66, 99, 255, 0.2);
+  }
+
+  .neon-glow-cyan {
+    box-shadow: 0 0 25px rgba(56, 189, 248, 0.4), inset 0 0 15px rgba(139, 92, 246, 0.2);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #080914;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e2238;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2f3554;
+}
