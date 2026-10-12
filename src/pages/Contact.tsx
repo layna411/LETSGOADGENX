@@ -19,6 +19,7 @@ export const Contact: React.FC = () => {
     { label: 'Mobile / Web Application', type: 'app' },
     { label: 'Graphic Design & Branding', type: 'design' },
     { label: 'Digital Marketing & Growth', type: 'marketing' },
+    { label: 'Photography & Photoshoots', type: 'photography' },
   ];
 
   return (

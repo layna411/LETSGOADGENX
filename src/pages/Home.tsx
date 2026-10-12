@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, MessageCircle, Sparkles, Layers, Cpu, TrendingUp, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, MessageCircle, Sparkles, Layers, Cpu, TrendingUp, ArrowUpRight, CheckCircle2, ShieldCheck, Zap } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { SectionHeading } from '../components/ui/SectionHeading';
@@ -36,10 +36,10 @@ export const Home: React.FC = () => {
       <div className="absolute top-[800px] right-0 w-[500px] h-[500px] purple-radial-bg pointer-events-none" />
 
       {/* SECTION B: HERO */}
-      <section className="relative pt-8 pb-20 md:pt-16 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      <section className="relative pt-2 sm:pt-4 lg:pt-3 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
           {/* Hero Left Content */}
-          <div className="lg:col-span-7 text-center lg:text-left space-y-6">
+          <div className="lg:col-span-6 text-center lg:text-left space-y-4 lg:space-y-5">
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
@@ -54,7 +54,7 @@ export const Home: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white tracking-tight leading-[1.12]"
+              className="text-3.5xl sm:text-4.5xl lg:text-5xl xl:text-6xl font-heading font-extrabold text-white tracking-tight leading-[1.12]"
             >
               We Build Digital Experiences That{' '}
               <span className="text-gradient">Grow Businesses.</span>
@@ -64,7 +64,7 @@ export const Home: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-base sm:text-lg md:text-xl text-brand-muted max-w-2xl mx-auto lg:mx-0 font-body leading-relaxed"
+              className="text-sm sm:text-base lg:text-lg text-brand-muted max-w-xl mx-auto lg:mx-0 font-body leading-relaxed"
             >
               Software, design, and digital marketing — everything your business needs to stand out and move forward.
             </motion.p>
@@ -73,7 +73,7 @@ export const Home: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
+              className="pt-1 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5"
             >
               <Button
                 to="/contact"
@@ -95,33 +95,61 @@ export const Home: React.FC = () => {
                 Explore Our Work
               </Button>
             </motion.div>
-
-            {/* Three concise capability labels */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="pt-6 border-t border-white/[0.08] grid grid-cols-3 gap-2 sm:gap-4 max-w-lg mx-auto lg:mx-0 text-left"
-            >
-              {SITE_CONFIG.capabilities.map((c, i) => (
-                <div key={i} className="flex flex-col">
-                  <span className="text-xs sm:text-sm font-heading font-bold text-white flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-brand-electric" />
-                    {c.label}
-                  </span>
-                  <span className="text-[10px] sm:text-xs text-brand-muted line-clamp-1">
-                    {c.desc}
-                  </span>
-                </div>
-              ))}
-            </motion.div>
           </div>
 
-          {/* Hero Right Visual */}
-          <div className="lg:col-span-5 flex justify-center">
+          {/* Hero Right Visual (Borderless & Floating Seamlessly) */}
+          <div className="lg:col-span-6 flex justify-center lg:justify-end">
             <HeroVisual />
           </div>
         </div>
+
+        {/* Hero Bottom Trust Metrics Bar (From Reference Design) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-6 sm:mt-8 lg:mt-10 pt-5 sm:pt-6 border-t border-white/[0.08] grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-brand-blue/15 border border-brand-blue/30 flex items-center justify-center text-brand-electric shrink-0">
+              <CheckCircle2 className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-base sm:text-lg font-heading font-extrabold text-white">100+</div>
+              <div className="text-xs text-brand-muted font-body">Projects & Designs</div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-brand-violet/15 border border-brand-violet/30 flex items-center justify-center text-brand-lavender shrink-0">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-sm sm:text-base font-heading font-bold text-white">All-in-One</div>
+              <div className="text-xs text-brand-muted font-body">Digital Partner</div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-brand-electric/15 border border-brand-electric/30 flex items-center justify-center text-brand-electric shrink-0">
+              <Zap className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-sm sm:text-base font-heading font-bold text-white">Custom Solutions</div>
+              <div className="text-xs text-brand-muted font-body">For Your Business</div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-sm sm:text-base font-heading font-bold text-white">Ongoing Support</div>
+              <div className="text-xs text-brand-muted font-body">Even After Launch</div>
+            </div>
+          </div>
+        </motion.div>
       </section>
 
       {/* SECTION C: TRUST AND CAPABILITIES */}

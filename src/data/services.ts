@@ -52,7 +52,7 @@ export const SERVICES: ServiceItem[] = [
     faqs: [
       {
         q: 'Do you develop for both Android and iOS?',
-        a: 'Yes! We build cross-platform mobile applications using Flutter or React Native to ship to both platforms efficiently, as well as native code when deep hardware optimization is required.',
+        a: 'Yes! We build cross-platform mobile applications using Flutter or React Native to ship to both platforms efficiently, as well as native code when deep device optimization is required.',
       },
       {
         q: 'How do you handle backend security and authentication?',

@@ -16,10 +16,12 @@ import { Photography } from './pages/Photography';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
 import { Terms } from './pages/Terms';
 import { NotFound } from './pages/NotFound';
+import { CustomCursor } from './components/effects/CustomCursor';
 
 export const App: React.FC = () => {
   return (
     <BrowserRouter>
+      <CustomCursor />
       <ScrollToTop />
       <div className="min-h-screen flex flex-col bg-brand-bg text-brand-text font-body selection:bg-brand-blue selection:text-white">
         {/* Optional slim announcement strip */}
