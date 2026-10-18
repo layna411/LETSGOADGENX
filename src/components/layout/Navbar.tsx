@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight, MessageCircle } from 'lucide-react';
 import { SITE_CONFIG } from '../../config/site';
 import { Button } from '../ui/Button';
@@ -23,12 +23,28 @@ export const Navbar: React.FC = () => {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
 
+  const isItemActive = (href: string) => {
+    const current = location.pathname;
+    if (href === '/') {
+      return current === '/';
+    }
+    if (href === '/services') {
+      return (
+        current === '/services' ||
+        current.startsWith('/services/') ||
+        current === '/photography' ||
+        current.startsWith('/photography/')
+      );
+    }
+    return current === href || current.startsWith(href + '/');
+  };
+
   return (
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#080914]/90 backdrop-blur-xl border-b border-white/[0.08] shadow-2xl shadow-black/50 py-3.5'
-          : 'bg-transparent py-5'
+          ? 'bg-[#080914]/90 backdrop-blur-xl border-b border-white/[0.08] shadow-2xl shadow-black/50 py-2.5 sm:py-3'
+          : 'bg-transparent py-3 sm:py-4'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -60,21 +76,23 @@ export const Navbar: React.FC = () => {
 
           {/* Desktop Nav Items */}
           <nav className="hidden md:flex items-center gap-1 lg:gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] backdrop-blur-md">
-            {SITE_CONFIG.navItems.map((item) => (
-              <NavLink
-                key={item.href}
-                to={item.href}
-                className={({ isActive }) =>
-                  `px-3.5 py-1.5 text-xs lg:text-sm font-medium rounded-full transition-all duration-200 ${
-                    isActive
+            {SITE_CONFIG.navItems.map((item) => {
+              const active = isItemActive(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  aria-current={active ? 'page' : undefined}
+                  className={`px-3.5 py-1.5 text-xs lg:text-sm font-medium rounded-full transition-all duration-200 ${
+                    active
                       ? 'text-white bg-white/[0.12] shadow-sm font-semibold'
                       : 'text-brand-muted hover:text-white hover:bg-white/[0.05]'
-                  }`
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Desktop Actions */}
@@ -127,22 +145,24 @@ export const Navbar: React.FC = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden fixed inset-x-0 top-[65px] bg-[#080914]/98 backdrop-blur-2xl border-b border-white/[0.1] shadow-2xl px-6 py-8 transition-all animate-in fade-in duration-200">
           <nav className="flex flex-col gap-3">
-            {SITE_CONFIG.navItems.map((item) => (
-              <NavLink
-                key={item.href}
-                to={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={({ isActive }) =>
-                  `px-4 py-3 rounded-xl text-base font-heading font-medium transition-all ${
-                    isActive
-                      ? 'text-white bg-brand-blue/20 border border-brand-blue/30'
+            {SITE_CONFIG.navItems.map((item) => {
+              const active = isItemActive(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  aria-current={active ? 'page' : undefined}
+                  className={`px-4 py-3 rounded-xl text-base font-heading font-medium transition-all ${
+                    active
+                      ? 'text-white bg-brand-blue/20 border border-brand-blue/30 font-semibold'
                       : 'text-brand-muted hover:text-white hover:bg-white/[0.05]'
-                  }`
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
 
             <div className="pt-4 mt-2 border-t border-white/[0.08] flex flex-col gap-3">
               <Button

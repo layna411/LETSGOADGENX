@@ -7,6 +7,8 @@ import { Button } from '../components/ui/Button';
 import { DynamicIcon } from '../components/ui/DynamicIcon';
 import { getWhatsAppUrl } from '../config/contact';
 import { NotFound } from './NotFound';
+import { SEOHead } from '../components/seo/SEOHead';
+import { PAGE_METADATA, SITE_URL } from '../config/seo';
 
 export const ServiceDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -27,8 +29,41 @@ export const ServiceDetail: React.FC = () => {
     return <NotFound />;
   }
 
+  const metaKey = `service-${resolvedSlug}`;
+  const metadata = PAGE_METADATA[metaKey] || {
+    title: `${service.title} Services | LetsGoAdGenX`,
+    description: service.fullDesc,
+    canonicalPath: `/services/${service.slug}`,
+    keywords: [service.title, `${service.title} services`, 'LetsGoAdGenX'],
+    ogType: 'website' as const,
+  };
+
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.title,
+    description: service.fullDesc,
+    provider: {
+      '@type': 'ProfessionalService',
+      name: 'LetsGoAdGenX',
+      url: SITE_URL,
+    },
+    serviceType: service.badge,
+    areaServed: 'India & Global',
+  };
+
   return (
     <div className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+      {/* Route-Aware Technical SEO */}
+      <SEOHead
+        metadata={metadata}
+        breadcrumbs={[
+          { name: 'Home', path: '/' },
+          { name: 'Services', path: '/services' },
+          { name: service.title, path: `/services/${service.slug}` },
+        ]}
+        schema={serviceSchema}
+      />
       {/* Back button */}
       <div className="mb-8">
         <Link

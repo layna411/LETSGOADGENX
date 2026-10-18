@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Send, CheckCircle2, AlertCircle, Loader2, MessageCircle, ShieldCheck } from 'lucide-react';
+import { Send, CheckCircle2, AlertCircle, Loader2, MessageCircle, ShieldCheck, Sparkles } from 'lucide-react';
 import { Button } from '../ui/Button';
-import { SERVICES } from '../../data/services';
 import { CONTACT_INFO } from '../../config/contact';
+import { createInquiry } from '../../services/inquiryService';
 
 interface FormData {
   fullName: string;
@@ -11,7 +11,7 @@ interface FormData {
   phone: string;
   businessName: string;
   serviceCategory: string;
-  budget: string;
+  engagementScope: string;
   timeline: string;
   description: string;
   privacyConsent: boolean;
@@ -27,7 +27,7 @@ export const ContactForm: React.FC = () => {
     phone: '',
     businessName: '',
     serviceCategory: '',
-    budget: '',
+    engagementScope: 'Standalone Job (Only this specific task)',
     timeline: '',
     description: '',
     privacyConsent: false,
@@ -122,46 +122,53 @@ export const ContactForm: React.FC = () => {
     const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
 
     try {
-      if (accessKey) {
-        // Real Web3Forms submission
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({
-            access_key: accessKey,
-            subject: `New Project Inquiry from ${formData.fullName} (${formData.serviceCategory})`,
-            from_name: 'LetsGoAdGenX Inquiries',
-            name: formData.fullName,
-            email: formData.email,
-            phone: formData.phone || 'Not provided',
-            business_name: formData.businessName || 'Not provided',
-            service_category: formData.serviceCategory,
-            budget: formData.budget || 'Flexible',
-            timeline: formData.timeline || 'Flexible',
-            message: formData.description,
-          }),
-        });
+      // 1. Save directly into Firebase Firestore
+      await createInquiry({
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone || '',
+        businessName: formData.businessName || '',
+        serviceCategory: formData.serviceCategory,
+        budget: formData.engagementScope || 'Standalone Job',
+        timeline: formData.timeline || 'Flexible',
+        message:
+          formData.description +
+          (formData.engagementScope ? `\n\n[Project Scope: ${formData.engagementScope}]` : ''),
+        type: 'project',
+      });
 
-        const result = await response.json();
-        if (result.success) {
-          setStatus('success');
-          setFeedbackMessage(
-            'Thank you! Your project inquiry has been delivered directly to the LetsGoAdGenX team. We will review your requirements and respond within 24 hours.'
-          );
-        } else {
-          throw new Error(result.message || 'Submission error');
+      // 2. Optional Web3Forms email relay if configured
+      if (accessKey) {
+        try {
+          await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify({
+              access_key: accessKey,
+              subject: `New Project Inquiry from ${formData.fullName} (${formData.serviceCategory})`,
+              from_name: 'LetsGoAdGenX Inquiries',
+              name: formData.fullName,
+              email: formData.email,
+              phone: formData.phone || 'Not provided',
+              business_name: formData.businessName || 'Not provided',
+              service_category: formData.serviceCategory,
+              project_scope: formData.engagementScope || 'Standalone Job',
+              timeline: formData.timeline || 'Flexible',
+              message: formData.description,
+            }),
+          });
+        } catch {
+          // Non-critical if external email gateway fails, Firestore already has it
         }
-      } else {
-        // Fallback simulation when VITE_WEB3FORMS_ACCESS_KEY is not yet populated
-        await new Promise((resolve) => setTimeout(resolve, 900));
-        setStatus('success');
-        setFeedbackMessage(
-          'Inquiry captured! Note: Configure VITE_WEB3FORMS_ACCESS_KEY in your .env for external email routing. You can also send this inquiry directly to our WhatsApp!'
-        );
       }
+
+      setStatus('success');
+      setFeedbackMessage(
+        'Thank you! Your project inquiry has been securely submitted to the LetsGoAdGenX team. We will review your requirements and respond within 24 hours.'
+      );
     } catch (err: unknown) {
       setStatus('error');
       setFeedbackMessage(
@@ -173,7 +180,7 @@ export const ContactForm: React.FC = () => {
   };
 
   const handleSendToWhatsApp = () => {
-    const summary = `*New Project Inquiry - LetsGoAdGenX*%0A%0A*Name:* ${encodeURIComponent(formData.fullName || 'Not provided')}%0A*Email:* ${encodeURIComponent(formData.email || 'Not provided')}%0A*Phone:* ${encodeURIComponent(formData.phone || 'Not provided')}%0A*Business:* ${encodeURIComponent(formData.businessName || 'Not provided')}%0A*Service:* ${encodeURIComponent(formData.serviceCategory || 'General Inquiry')}%0A*Budget:* ${encodeURIComponent(formData.budget || 'Flexible')}%0A*Timeline:* ${encodeURIComponent(formData.timeline || 'Flexible')}%0A*Description:* ${encodeURIComponent(formData.description || 'Discuss project details.')}`;
+    const summary = `*New Project Inquiry - LetsGoAdGenX*%0A%0A*Name:* ${encodeURIComponent(formData.fullName || 'Not provided')}%0A*Email:* ${encodeURIComponent(formData.email || 'Not provided')}%0A*Phone:* ${encodeURIComponent(formData.phone || 'Not provided')}%0A*Business:* ${encodeURIComponent(formData.businessName || 'Not provided')}%0A*Service:* ${encodeURIComponent(formData.serviceCategory || 'General Inquiry')}%0A*Scope:* ${encodeURIComponent(formData.engagementScope || 'Standalone Job')}%0A*Timeline:* ${encodeURIComponent(formData.timeline || 'Flexible')}%0A*Description:* ${encodeURIComponent(formData.description || 'Discuss project details.')}`;
     window.open(`https://wa.me/${CONTACT_INFO.whatsappNumber}?text=${summary}`, '_blank', 'noopener,noreferrer');
   };
 
@@ -210,7 +217,7 @@ export const ContactForm: React.FC = () => {
                 phone: '',
                 businessName: '',
                 serviceCategory: '',
-                budget: '',
+                engagementScope: 'Standalone Job (Only this specific task)',
                 timeline: '',
                 description: '',
                 privacyConsent: false,
@@ -251,6 +258,24 @@ export const ContactForm: React.FC = () => {
         </div>
       )}
 
+      {/* Standalone Tasks & Single Services Welcome Banner */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-brand-blue/15 via-brand-violet/10 to-transparent border border-brand-blue/20 flex items-start gap-3.5">
+        <div className="p-2 rounded-xl bg-brand-blue/20 text-brand-electric shrink-0 mt-0.5">
+          <Sparkles className="w-4 h-4" />
+        </div>
+        <div className="space-y-1">
+          <div className="text-xs font-heading font-bold text-white flex flex-wrap items-center gap-2">
+            <span>Standalone Tasks & Single Services Welcome!</span>
+            <span className="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-300 font-mono font-medium border border-emerald-500/30">
+              Single Task or Full Suite
+            </span>
+          </div>
+          <p className="text-[11px] sm:text-xs text-brand-muted leading-relaxed font-body">
+            You don't need a massive agency retainer. We gladly take specialized individual jobs—hire us for <strong>website creation only</strong>, <strong>video editing only</strong>, <strong>digital promotions only</strong>, or <strong>graphic design separately</strong>, as well as full-scale brand packages.
+          </p>
+        </div>
+      </div>
+
       {/* Row 1: Full Name & Email */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
@@ -263,7 +288,7 @@ export const ContactForm: React.FC = () => {
             name="fullName"
             value={formData.fullName}
             onChange={handleChange}
-            placeholder="John Doe"
+            placeholder="Enter your name"
             required
             aria-required="true"
             aria-invalid={!!errors.fullName}
@@ -289,7 +314,7 @@ export const ContactForm: React.FC = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="john@example.com"
+            placeholder="Enter your email"
             required
             aria-required="true"
             aria-invalid={!!errors.email}
@@ -318,7 +343,7 @@ export const ContactForm: React.FC = () => {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="+91 98765 43210"
+            placeholder="Enter your phone number"
             className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 focus:border-brand-blue text-white placeholder-white/20 text-sm focus:outline-none focus:ring-1 focus:ring-brand-blue transition-all"
           />
         </div>
@@ -333,17 +358,17 @@ export const ContactForm: React.FC = () => {
             name="businessName"
             value={formData.businessName}
             onChange={handleChange}
-            placeholder="Acme Innovations"
+            placeholder="Enter your company name"
             className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 focus:border-brand-blue text-white placeholder-white/20 text-sm focus:outline-none focus:ring-1 focus:ring-brand-blue transition-all"
           />
         </div>
       </div>
 
-      {/* Row 3: Service Category & Budget */}
+      {/* Row 3: Service Selection & Project Scope */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
           <label htmlFor="serviceCategory" className="block text-xs font-heading font-semibold text-white/90 mb-2">
-            Primary Service Needed <span className="text-brand-electric">*</span>
+            Service Required <span className="text-brand-electric">*</span>
           </label>
           <select
             id="serviceCategory"
@@ -358,13 +383,28 @@ export const ContactForm: React.FC = () => {
               errors.serviceCategory ? 'border-red-400 focus:border-red-400' : 'border-white/10 focus:border-brand-blue'
             } text-white text-sm focus:outline-none focus:ring-1 focus:ring-brand-blue transition-all`}
           >
-            <option value="">Select a service category...</option>
-            {SERVICES.map((s) => (
-              <option key={s.id} value={s.title}>
-                {s.title}
-              </option>
-            ))}
-            <option value="Other / Integrated Solution">Multiple Services / Integrated Growth</option>
+            <option value="">Select a service...</option>
+            <option value="Website Creation Only (Landing Page, Business Site, Web App)">
+              🌐 Website Creation Only (Landing page, Business site, Web app)
+            </option>
+            <option value="Video Editing & Post-Production Only">
+              🎬 Video Editing Only (Reels, YouTube, Commercials, Motion graphics)
+            </option>
+            <option value="Digital Promotion & Marketing Only">
+              📈 Digital Promotion & Marketing Only (Meta/Google Ads, SEO, Social Reach)
+            </option>
+            <option value="Graphic Design, Logo & Branding Only">
+              🎨 Graphic Design & Logo Branding Only (Logo, Creatives, Print)
+            </option>
+            <option value="Software & Mobile App Development Only">
+              📱 Software & Mobile App Development Only (iOS, Android, Custom Tech)
+            </option>
+            <option value="Commercial Photography & Photoshoots Only">
+              📸 Commercial Photography & Studio Shoots Only
+            </option>
+            <option value="Full Integrated Package / Multi-Service Solution">
+              🚀 Full Integrated Package (Multiple Services Combined)
+            </option>
           </select>
           {errors.serviceCategory && (
             <p id="serviceCategory-error" className="mt-1.5 text-xs text-red-400">
@@ -374,22 +414,28 @@ export const ContactForm: React.FC = () => {
         </div>
 
         <div>
-          <label htmlFor="budget" className="block text-xs font-heading font-semibold text-white/90 mb-2">
-            Estimated Budget <span className="text-white/40 text-[11px]">(Optional)</span>
+          <label htmlFor="engagementScope" className="block text-xs font-heading font-semibold text-white/90 mb-2">
+            Project Scope <span className="text-white/40 text-[11px]">(Optional)</span>
           </label>
           <select
-            id="budget"
-            name="budget"
-            value={formData.budget}
+            id="engagementScope"
+            name="engagementScope"
+            value={formData.engagementScope}
             onChange={handleChange}
             className="w-full px-4 py-3 rounded-xl bg-[#0E1020] border border-white/10 focus:border-brand-blue text-white text-sm focus:outline-none focus:ring-1 focus:ring-brand-blue transition-all"
           >
-            <option value="">Select budget tier...</option>
-            <option value="Under ₹25,000 / $300">Starter (Under ₹25,000 / $300)</option>
-            <option value="₹25,000 - ₹50,000 / $300 - $600">Standard (₹25,000 - ₹50,000)</option>
-            <option value="₹50,000 - ₹1,50,000 / $600 - $1,800">Growth (₹50,000 - ₹1,50,000)</option>
-            <option value="Above ₹1,50,000 / $1,800+">Enterprise (Above ₹1,50,000)</option>
-            <option value="Flexible / Needs Discussion">Flexible / Need Proposal</option>
+            <option value="Standalone Job (Only this single task)">
+              Standalone Job (Only this single task)
+            </option>
+            <option value="Full Comprehensive Project">
+              Full Comprehensive Project
+            </option>
+            <option value="Ongoing Monthly Support / Retainer">
+              Ongoing Monthly Support / Campaigns
+            </option>
+            <option value="Flexible / Need Consultation">
+              Flexible / Let's Discuss
+            </option>
           </select>
         </div>
       </div>
@@ -425,7 +471,7 @@ export const ContactForm: React.FC = () => {
           rows={4}
           value={formData.description}
           onChange={handleChange}
-          placeholder="Briefly tell us about your company, what you want to build or market, and your key expectations..."
+          placeholder="Enter your message or project details"
           required
           aria-required="true"
           aria-invalid={!!errors.description}

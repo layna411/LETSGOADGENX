@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Mail, Phone, MessageCircle, Clock, Check, Copy } from 'lucide-react';
 import { CONTACT_INFO, getWhatsAppUrl, getMailtoUrl, type InquiryType } from '../config/contact';
 import { ContactForm } from '../components/forms/ContactForm';
-import { Badge } from '../components/ui/Badge';
+import { SEOHead } from '../components/seo/SEOHead';
+import { PAGE_METADATA } from '../config/seo';
 
 export const Contact: React.FC = () => {
   const [copiedEmail, setCopiedEmail] = useState(false);
@@ -24,15 +25,26 @@ export const Contact: React.FC = () => {
 
   return (
     <div className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16">
+      {/* Route-Aware Technical SEO */}
+      <SEOHead
+        metadata={PAGE_METADATA.contact}
+        breadcrumbs={[
+          { name: 'Home', path: '/' },
+          { name: 'Contact', path: '/contact' },
+        ]}
+      />
+
       {/* Contact Header */}
       <div className="text-center max-w-3xl mx-auto space-y-4">
-        <Badge variant="primary">Start a Project</Badge>
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/15 border border-brand-blue/30 text-xs font-heading font-semibold text-brand-electric shadow-glow-sm">
+          <span>✨ Standalone Tasks & Full Projects Welcome</span>
+        </div>
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white tracking-tight">
           Let’s Build Something <br />
           <span className="text-gradient">Extraordinary.</span>
         </h1>
         <p className="text-base sm:text-lg text-brand-muted leading-relaxed font-body">
-          Tell us about your upcoming software, website, branding, or growth initiative. We review every inquiry personally and respond within 24 hours.
+          Need a <strong>standalone website created</strong>, <strong>video editing only</strong>, <strong>promotional campaigns</strong>, or an <strong>end-to-end digital suite</strong>? We take both individual specialized tasks and comprehensive projects.
         </p>
       </div>
 

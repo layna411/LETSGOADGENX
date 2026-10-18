@@ -3,10 +3,21 @@ import { ABOUT_DATA } from '../data/about';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { Sparkles, ArrowRight, Compass, Eye } from 'lucide-react';
+import { SEOHead } from '../components/seo/SEOHead';
+import { PAGE_METADATA } from '../config/seo';
 
 export const About: React.FC = () => {
   return (
     <div className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-20">
+      {/* Route-Aware Technical SEO */}
+      <SEOHead
+        metadata={PAGE_METADATA.about}
+        breadcrumbs={[
+          { name: 'Home', path: '/' },
+          { name: 'About Us', path: '/about' },
+        ]}
+      />
+
       {/* Hero Header */}
       <div className="text-center max-w-3xl mx-auto space-y-5">
         <Badge variant="purple" icon={<Sparkles className="w-3.5 h-3.5" />}>
@@ -22,20 +33,44 @@ export const About: React.FC = () => {
       </div>
 
       {/* Brand Story / Narrative */}
-      <div className="p-8 sm:p-14 rounded-3xl glass-card border border-white/[0.08] relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-violet/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="p-8 sm:p-12 lg:p-14 rounded-3xl glass-card border border-white/[0.08] relative overflow-hidden">
+        <div className="absolute top-1/2 right-10 -translate-y-1/2 w-96 h-96 bg-brand-blue/15 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-80 h-80 bg-brand-violet/20 rounded-full blur-[90px] pointer-events-none" />
 
-        <div className="relative z-10 max-w-3xl space-y-6">
-          <div className="text-xs uppercase font-heading font-semibold tracking-wider text-brand-lavender">
-            Who We Are
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          {/* Left Column: Narrative Copy */}
+          <div className="lg:col-span-7 space-y-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs uppercase font-heading font-semibold tracking-wider text-brand-electric bg-brand-blue/15 border border-brand-blue/25">
+              <span>Who We Are</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-white tracking-tight leading-snug">
+              An Ambitious Digital Growth & Creative Technology Company
+            </h2>
+            <div className="space-y-4 text-sm sm:text-base text-brand-muted leading-relaxed font-body">
+              {ABOUT_DATA.story.map((p, idx) => (
+                <p key={idx}>{p}</p>
+              ))}
+            </div>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-heading font-bold text-white">
-            An Ambitious Digital Growth & Creative Technology Company
-          </h2>
-          <div className="space-y-4 text-sm sm:text-base text-brand-muted leading-relaxed font-body">
-            {ABOUT_DATA.story.map((p, idx) => (
-              <p key={idx}>{p}</p>
-            ))}
+
+          {/* Right Column: 3D Character & Ecosystem Artwork */}
+          <div className="lg:col-span-5 flex items-center justify-center">
+            <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-none group">
+              {/* Radial backlight glow */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-brand-blue/25 via-brand-violet/25 to-brand-electric/15 rounded-full blur-2xl transform scale-90 group-hover:scale-100 transition-transform duration-700 pointer-events-none" />
+
+              <img
+                src="/about-character-transparent.png"
+                alt="LetsGo AdGenX Digital & Creative Ecosystem"
+                className="relative z-10 w-full h-auto object-contain drop-shadow-[0_20px_40px_rgba(66,99,255,0.35)] select-none transition-transform duration-500 group-hover:scale-[1.02]"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.endsWith('/about-character.jpg')) {
+                    target.src = '/about-character.jpg';
+                  }
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>

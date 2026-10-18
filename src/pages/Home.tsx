@@ -19,6 +19,8 @@ import { WHY_CHOOSE_US } from '../data/whyUs';
 import { SITE_CONFIG } from '../config/site';
 import { getWhatsAppUrl } from '../config/contact';
 import { Link } from 'react-router-dom';
+import { SEOHead } from '../components/seo/SEOHead';
+import { PAGE_METADATA, getOrganizationSchema, getWebSiteSchema } from '../config/seo';
 
 export const Home: React.FC = () => {
   const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
@@ -31,15 +33,21 @@ export const Home: React.FC = () => {
 
   return (
     <div className="relative overflow-hidden">
+      {/* Route-Aware Technical SEO & Structured Data */}
+      <SEOHead
+        metadata={PAGE_METADATA.home}
+        schema={[getOrganizationSchema(), getWebSiteSchema()]}
+      />
+
       {/* Background Ambient Glows */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] subtle-radial-bg pointer-events-none" />
       <div className="absolute top-[800px] right-0 w-[500px] h-[500px] purple-radial-bg pointer-events-none" />
 
       {/* SECTION B: HERO */}
-      <section className="relative pt-2 sm:pt-4 lg:pt-3 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
+      <section className="relative pt-1 sm:pt-3 lg:pt-2 pb-8 sm:pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
           {/* Hero Left Content */}
-          <div className="lg:col-span-6 text-center lg:text-left space-y-4 lg:space-y-5">
+          <div className="lg:col-span-7 text-center lg:text-left space-y-3.5 sm:space-y-4">
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
@@ -54,7 +62,7 @@ export const Home: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3.5xl sm:text-4.5xl lg:text-5xl xl:text-6xl font-heading font-extrabold text-white tracking-tight leading-[1.12]"
+              className="text-3xl sm:text-4xl md:text-[2.65rem] lg:text-[2.75rem] xl:text-5xl 2xl:text-6xl font-heading font-extrabold text-white tracking-tight leading-[1.14]"
             >
               We Build Digital Experiences That{' '}
               <span className="text-gradient">Grow Businesses.</span>
@@ -64,7 +72,7 @@ export const Home: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-sm sm:text-base lg:text-lg text-brand-muted max-w-xl mx-auto lg:mx-0 font-body leading-relaxed"
+              className="text-sm sm:text-base text-brand-muted max-w-xl mx-auto lg:mx-0 font-body leading-relaxed"
             >
               Software, design, and digital marketing — everything your business needs to stand out and move forward.
             </motion.p>
@@ -73,12 +81,12 @@ export const Home: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="pt-1 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5"
+              className="pt-1 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3"
             >
               <Button
                 to="/contact"
                 variant="primary"
-                size="lg"
+                size="md"
                 iconRight={<ArrowRight className="w-4 h-4" />}
                 className="w-full sm:w-auto"
               >
@@ -88,7 +96,7 @@ export const Home: React.FC = () => {
               <Button
                 to="/work"
                 variant="secondary"
-                size="lg"
+                size="md"
                 iconRight={<ArrowUpRight className="w-4 h-4" />}
                 className="w-full sm:w-auto"
               >
@@ -98,55 +106,55 @@ export const Home: React.FC = () => {
           </div>
 
           {/* Hero Right Visual (Borderless & Floating Seamlessly) */}
-          <div className="lg:col-span-6 flex justify-center lg:justify-end">
+          <div className="lg:col-span-5 flex justify-center lg:justify-end">
             <HeroVisual />
           </div>
         </div>
 
-        {/* Hero Bottom Trust Metrics Bar (From Reference Design) */}
+        {/* Hero Bottom Trust Metrics Bar */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-6 sm:mt-8 lg:mt-10 pt-5 sm:pt-6 border-t border-white/[0.08] grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6"
+          className="mt-5 sm:mt-6 lg:mt-7 pt-4 sm:pt-5 border-t border-white/[0.08] grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-5"
         >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-brand-blue/15 border border-brand-blue/30 flex items-center justify-center text-brand-electric shrink-0">
-              <CheckCircle2 className="w-5 h-5" />
+          <div className="flex items-center gap-3 p-2.5 sm:p-3 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:border-brand-blue/30 transition-colors">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-brand-blue/15 border border-brand-blue/30 flex items-center justify-center text-brand-electric shrink-0">
+              <CheckCircle2 className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <div className="text-base sm:text-lg font-heading font-extrabold text-white">100+</div>
-              <div className="text-xs text-brand-muted font-body">Projects & Designs</div>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-brand-violet/15 border border-brand-violet/30 flex items-center justify-center text-brand-lavender shrink-0">
-              <Sparkles className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="text-sm sm:text-base font-heading font-bold text-white">All-in-One</div>
-              <div className="text-xs text-brand-muted font-body">Digital Partner</div>
+            <div className="min-w-0">
+              <div className="text-sm sm:text-base font-heading font-extrabold text-white leading-tight">100+</div>
+              <div className="text-[11px] sm:text-xs text-brand-muted font-body truncate">Projects & Designs</div>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-brand-electric/15 border border-brand-electric/30 flex items-center justify-center text-brand-electric shrink-0">
-              <Zap className="w-5 h-5" />
+          <div className="flex items-center gap-3 p-2.5 sm:p-3 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:border-brand-violet/30 transition-colors">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-brand-violet/15 border border-brand-violet/30 flex items-center justify-center text-brand-lavender shrink-0">
+              <Sparkles className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <div className="text-sm sm:text-base font-heading font-bold text-white">Custom Solutions</div>
-              <div className="text-xs text-brand-muted font-body">For Your Business</div>
+            <div className="min-w-0">
+              <div className="text-sm sm:text-base font-heading font-bold text-white leading-tight">All-in-One</div>
+              <div className="text-[11px] sm:text-xs text-brand-muted font-body truncate">Digital Partner</div>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
-              <ShieldCheck className="w-5 h-5" />
+          <div className="flex items-center gap-3 p-2.5 sm:p-3 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:border-brand-electric/30 transition-colors">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-brand-electric/15 border border-brand-electric/30 flex items-center justify-center text-brand-electric shrink-0">
+              <Zap className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <div className="text-sm sm:text-base font-heading font-bold text-white">Ongoing Support</div>
-              <div className="text-xs text-brand-muted font-body">Even After Launch</div>
+            <div className="min-w-0">
+              <div className="text-sm sm:text-base font-heading font-bold text-white leading-tight">Custom Solutions</div>
+              <div className="text-[11px] sm:text-xs text-brand-muted font-body truncate">For Your Business</div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 p-2.5 sm:p-3 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:border-emerald-500/30 transition-colors">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+              <ShieldCheck className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
+            </div>
+            <div className="min-w-0">
+              <div className="text-sm sm:text-base font-heading font-bold text-white leading-tight">Ongoing Support</div>
+              <div className="text-[11px] sm:text-xs text-brand-muted font-body truncate">Even After Launch</div>
             </div>
           </div>
         </motion.div>
@@ -233,54 +241,86 @@ export const Home: React.FC = () => {
             description="Explore the kinds of digital products and creative work we build. Clearly labelled concept studies and design explorations demonstrate our technical and aesthetic standards."
           />
 
-          {/* Category Filter Chips */}
-          <div className="flex items-center justify-center flex-wrap gap-2 mb-12">
-            {(
-              [
-                'All',
-                'Websites',
-                'Mobile Applications',
-                'Web Applications',
-                'Branding',
-                'Graphic Design',
-                'Video and Marketing',
-              ] as ProjectCategory[]
-            ).map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-2 rounded-full text-xs font-heading font-medium transition-all ${
-                  activeCategory === cat
-                    ? 'bg-brand-blue text-white shadow-glow-sm border border-brand-electric/40'
-                    : 'bg-white/[0.03] text-brand-muted hover:text-white hover:bg-white/[0.08] border border-white/[0.06]'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
+          {PROJECTS.length === 0 ? (
+            <div className="p-8 sm:p-14 rounded-3xl glass-card border border-white/[0.08] text-center space-y-5 max-w-3xl mx-auto">
+              <div className="w-14 h-14 rounded-2xl bg-brand-blue/20 text-brand-electric border border-brand-blue/30 mx-auto flex items-center justify-center">
+                <Sparkles className="w-6 h-6" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-xl sm:text-2xl font-heading font-bold text-white">
+                  Client Case Studies Updating Soon
+                </h3>
+                <p className="text-xs sm:text-sm text-brand-muted max-w-lg mx-auto font-body leading-relaxed">
+                  We are currently curating and uploading our newest client deployments across website creation, video editing, branding, and promotional marketing.
+                </p>
+              </div>
+              <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+                <a
+                  href={getWhatsAppUrl('general')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#25D366]/20 hover:bg-[#25D366]/30 text-[#25D366] text-xs font-heading font-semibold border border-[#25D366]/30 transition-all"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Request Work Samples on WhatsApp</span>
+                </a>
+                <Button to="/contact" variant="primary" size="sm">
+                  Start a Project
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <>
+              {/* Category Filter Chips */}
+              <div className="flex items-center justify-center flex-wrap gap-2 mb-12">
+                {(
+                  [
+                    'All',
+                    'Websites',
+                    'Mobile Applications',
+                    'Web Applications',
+                    'Branding',
+                    'Graphic Design',
+                    'Video and Marketing',
+                  ] as ProjectCategory[]
+                ).map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    className={`px-4 py-2 rounded-full text-xs font-heading font-medium transition-all ${
+                      activeCategory === cat
+                        ? 'bg-brand-blue text-white shadow-glow-sm border border-brand-electric/40'
+                        : 'bg-white/[0.03] text-brand-muted hover:text-white hover:bg-white/[0.08] border border-white/[0.06]'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
 
-          {/* Project Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {filteredProjects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                onView={(p) => setSelectedProject(p)}
-              />
-            ))}
-          </div>
+              {/* Project Cards Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                {filteredProjects.map((project) => (
+                  <ProjectCard
+                    key={project.id}
+                    project={project}
+                    onView={(p) => setSelectedProject(p)}
+                  />
+                ))}
+              </div>
 
-          <div className="mt-12 text-center">
-            <Button
-              to="/work"
-              variant="secondary"
-              size="md"
-              iconRight={<ArrowRight className="w-4 h-4" />}
-            >
-              Browse All Case Studies & Prototypes
-            </Button>
-          </div>
+              <div className="mt-12 text-center">
+                <Button
+                  to="/work"
+                  variant="secondary"
+                  size="md"
+                  iconRight={<ArrowRight className="w-4 h-4" />}
+                >
+                  Browse All Case Studies & Prototypes
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       </section>
 

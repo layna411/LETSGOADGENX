@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Send, CheckCircle2, AlertCircle, Loader2, MessageCircle, Calendar, MapPin, Clock, Camera } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { CONTACT_INFO, getWhatsAppUrl } from '../../config/contact';
+import { createInquiry } from '../../services/inquiryService';
 
 interface PhotoshootFormData {
   fullName: string;
@@ -112,46 +113,55 @@ export const PhotoshootInquiryForm: React.FC<PhotoshootInquiryFormProps> = ({
     const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
 
     try {
-      if (accessKey) {
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({
-            access_key: accessKey,
-            subject: `Photoshoot Booking Inquiry: ${formData.serviceRequired} (${formData.fullName})`,
-            from_name: 'LetsGoAdGenX Photography Desk',
-            name: formData.fullName,
-            email: formData.email,
-            phone: formData.phone,
-            service_required: formData.serviceRequired,
-            preferred_date: formData.shootDate || 'Not specified',
-            location: formData.location || 'To be determined',
-            duration: formData.duration,
-            environment: formData.indoorOutdoor,
-            budget: formData.budget || 'Flexible',
-            message: formData.projectDetails,
-          }),
-        });
+      // 1. Save directly into Firebase Firestore
+      await createInquiry({
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        serviceCategory: formData.serviceRequired,
+        shootDate: formData.shootDate || 'Not specified',
+        location: formData.location || 'To be determined',
+        duration: formData.duration,
+        indoorOutdoor: formData.indoorOutdoor,
+        budget: formData.budget || 'Flexible',
+        message: formData.projectDetails,
+        type: 'photography',
+      });
 
-        const result = await response.json();
-        if (result.success) {
-          setStatus('success');
-          setFeedbackMessage(
-            'Your photoshoot request has been recorded. Our creative producer will contact you within 24 hours to confirm date availability, shot lists, and location details.'
-          );
-        } else {
-          throw new Error(result.message || 'Submission error');
+      // 2. Optional Web3Forms email relay if configured
+      if (accessKey) {
+        try {
+          await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify({
+              access_key: accessKey,
+              subject: `Photoshoot Booking Inquiry: ${formData.serviceRequired} (${formData.fullName})`,
+              from_name: 'LetsGoAdGenX Photography Desk',
+              name: formData.fullName,
+              email: formData.email,
+              phone: formData.phone,
+              service_required: formData.serviceRequired,
+              preferred_date: formData.shootDate || 'Not specified',
+              location: formData.location || 'To be determined',
+              duration: formData.duration,
+              environment: formData.indoorOutdoor,
+              budget: formData.budget || 'Flexible',
+              message: formData.projectDetails,
+            }),
+          });
+        } catch {
+          // Non-critical
         }
-      } else {
-        await new Promise((resolve) => setTimeout(resolve, 800));
-        setStatus('success');
-        setFeedbackMessage(
-          'Inquiry captured! You can also connect directly via WhatsApp to verify availability for your preferred date.'
-        );
       }
+
+      setStatus('success');
+      setFeedbackMessage(
+        'Your photoshoot request has been recorded in our production system! Our creative producer will contact you within 24 hours to confirm date availability, shot lists, and location details.'
+      );
     } catch (err: unknown) {
       setStatus('error');
       setFeedbackMessage(
@@ -257,7 +267,7 @@ export const PhotoshootInquiryForm: React.FC<PhotoshootInquiryFormProps> = ({
             name="fullName"
             value={formData.fullName}
             onChange={handleChange}
-            placeholder="Sarah Jenkins"
+            placeholder="Enter your name"
             required
             className={`w-full px-4 py-3 rounded-xl bg-white/[0.04] border ${
               errors.fullName ? 'border-red-400' : 'border-white/10 focus:border-brand-blue'
@@ -276,7 +286,7 @@ export const PhotoshootInquiryForm: React.FC<PhotoshootInquiryFormProps> = ({
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="+91 90801 04624"
+            placeholder="Enter your phone number"
             required
             className={`w-full px-4 py-3 rounded-xl bg-white/[0.04] border ${
               errors.phone ? 'border-red-400' : 'border-white/10 focus:border-brand-blue'
@@ -298,7 +308,7 @@ export const PhotoshootInquiryForm: React.FC<PhotoshootInquiryFormProps> = ({
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="sarah@example.com"
+            placeholder="Enter your email"
             required
             className={`w-full px-4 py-3 rounded-xl bg-white/[0.04] border ${
               errors.email ? 'border-red-400' : 'border-white/10 focus:border-brand-blue'
@@ -353,7 +363,7 @@ export const PhotoshootInquiryForm: React.FC<PhotoshootInquiryFormProps> = ({
             name="location"
             value={formData.location}
             onChange={handleChange}
-            placeholder="e.g. In-studio or client office (City, State)"
+            placeholder="Enter shoot location or city"
             className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 focus:border-brand-blue text-white placeholder-white/20 text-sm focus:outline-none focus:ring-1 focus:ring-brand-blue transition-all"
           />
         </div>
@@ -410,7 +420,7 @@ export const PhotoshootInquiryForm: React.FC<PhotoshootInquiryFormProps> = ({
           rows={4}
           value={formData.projectDetails}
           onChange={handleChange}
-          placeholder="Describe your subject (e.g. 15 cosmetic products, 8 team members headshots, 1-day tech conference), visual style expectations, and intended usage..."
+          placeholder="Enter shoot concept or details"
           required
           className={`w-full px-4 py-3 rounded-xl bg-white/[0.04] border ${
             errors.projectDetails ? 'border-red-400' : 'border-white/10 focus:border-brand-blue'

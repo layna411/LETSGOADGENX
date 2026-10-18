@@ -1,47 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://letsgoadgenx.com/</loc>
+    <loc>https://letsgo-adgenx.web.app/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://letsgoadgenx.com/services</loc>
+    <loc>https://letsgo-adgenx.web.app/services</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://letsgoadgenx.com/services/photography</loc>
+    <loc>https://letsgo-adgenx.web.app/services/software-development</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://letsgoadgenx.com/work</loc>
+    <loc>https://letsgo-adgenx.web.app/services/website-development</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://letsgo-adgenx.web.app/services/digital-marketing</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://letsgo-adgenx.web.app/services/graphic-design</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://letsgo-adgenx.web.app/services/video-editing</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://letsgo-adgenx.web.app/services/ui-ux-design</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://letsgo-adgenx.web.app/services/photography</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://letsgo-adgenx.web.app/work</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://letsgoadgenx.com/about</loc>
+    <loc>https://letsgo-adgenx.web.app/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://letsgo-adgenx.web.app/process</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://letsgoadgenx.com/process</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://letsgoadgenx.com/contact</loc>
+    <loc>https://letsgo-adgenx.web.app/contact</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://letsgoadgenx.com/privacy</loc>
+    <loc>https://letsgo-adgenx.web.app/privacy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://letsgoadgenx.com/terms</loc>
+    <loc>https://letsgo-adgenx.web.app/terms</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

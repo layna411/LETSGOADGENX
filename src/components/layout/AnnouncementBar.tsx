@@ -9,7 +9,7 @@ export const AnnouncementBar: React.FC = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="relative bg-gradient-to-r from-brand-blue/90 via-brand-violet/90 to-brand-electric/90 text-white text-xs sm:text-sm py-2 px-4 transition-all duration-300">
+    <div className="relative bg-gradient-to-r from-brand-blue/90 via-brand-violet/90 to-brand-electric/90 text-white text-[11px] sm:text-xs py-1.5 sm:py-2 px-3 sm:px-4 transition-all duration-300">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
         <div className="flex-1 flex items-center justify-center gap-2 text-center font-medium">
           <Sparkles className="w-3.5 h-3.5 text-brand-lavender shrink-0 hidden sm:inline" />

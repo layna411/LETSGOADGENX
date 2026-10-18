@@ -4,10 +4,21 @@ import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { CheckCircle2, ArrowRight, Sparkles, MessageCircle } from 'lucide-react';
 import { getWhatsAppUrl } from '../config/contact';
+import { SEOHead } from '../components/seo/SEOHead';
+import { PAGE_METADATA } from '../config/seo';
 
 export const Process: React.FC = () => {
   return (
     <div className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-20">
+      {/* Route-Aware Technical SEO */}
+      <SEOHead
+        metadata={PAGE_METADATA.process}
+        breadcrumbs={[
+          { name: 'Home', path: '/' },
+          { name: 'Process', path: '/process' },
+        ]}
+      />
+
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-4">
         <Badge variant="cyan" icon={<Sparkles className="w-3.5 h-3.5" />}>

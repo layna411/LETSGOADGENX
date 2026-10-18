@@ -11,6 +11,8 @@ import {
   PHOTOGRAPHY_FAQS,
   type PhotographyItem,
 } from '../data/photography';
+import { SEOHead } from '../components/seo/SEOHead';
+import { PAGE_METADATA, SITE_URL } from '../config/seo';
 
 export const Photography: React.FC = () => {
   const [selectedServiceForForm, setSelectedServiceForForm] = useState<string>('Product Shoot');
@@ -30,8 +32,34 @@ export const Photography: React.FC = () => {
     scrollToInquiry();
   };
 
+  const photographySchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'Professional Photography & Visual Production',
+    description:
+      'Professional product photography, corporate shoots, portrait sessions, event coverage, and brand campaign visual production.',
+    provider: {
+      '@type': 'ProfessionalService',
+      name: 'LetsGoAdGenX',
+      url: SITE_URL,
+    },
+    serviceType: 'Commercial & Brand Photography',
+    areaServed: 'India & Global',
+  };
+
   return (
     <div className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-24">
+      {/* Route-Aware Technical SEO */}
+      <SEOHead
+        metadata={PAGE_METADATA.photography}
+        breadcrumbs={[
+          { name: 'Home', path: '/' },
+          { name: 'Services', path: '/services' },
+          { name: 'Photography', path: '/services/photography' },
+        ]}
+        schema={photographySchema}
+      />
+
       {/* 1. PHOTOGRAPHY HERO SECTION */}
       <section className="relative p-8 sm:p-14 lg:p-20 rounded-3xl glass-card border border-white/[0.08] overflow-hidden text-center">
         {/* Ambient lighting lights */}

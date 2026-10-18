@@ -2,10 +2,20 @@ import React from 'react';
 import { Badge } from '../components/ui/Badge';
 import { CONTACT_INFO } from '../config/contact';
 import { ShieldCheck } from 'lucide-react';
+import { SEOHead } from '../components/seo/SEOHead';
+import { PAGE_METADATA } from '../config/seo';
 
 export const PrivacyPolicy: React.FC = () => {
   return (
     <div className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-10">
+      {/* Route-Aware Technical SEO */}
+      <SEOHead
+        metadata={PAGE_METADATA.privacy}
+        breadcrumbs={[
+          { name: 'Home', path: '/' },
+          { name: 'Privacy Policy', path: '/privacy' },
+        ]}
+      />
       <div className="text-center space-y-4">
         <Badge variant="cyan" icon={<ShieldCheck className="w-3.5 h-3.5" />}>
           Legal & Transparency

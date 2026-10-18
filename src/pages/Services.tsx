@@ -7,21 +7,34 @@ import { Button } from '../components/ui/Button';
 import { DynamicIcon } from '../components/ui/DynamicIcon';
 import { ServiceModal } from '../components/services/ServiceModal';
 import { getWhatsAppUrl } from '../config/contact';
+import { SEOHead } from '../components/seo/SEOHead';
+import { PAGE_METADATA } from '../config/seo';
 
 export const Services: React.FC = () => {
   const [activeModalService, setActiveModalService] = useState<ServiceItem | null>(null);
 
   return (
     <div className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* Route-Aware Technical SEO */}
+      <SEOHead
+        metadata={PAGE_METADATA.services}
+        breadcrumbs={[
+          { name: 'Home', path: '/' },
+          { name: 'Services', path: '/services' },
+        ]}
+      />
+
       {/* Services Header */}
       <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-        <Badge variant="primary">Full-Stack Digital Solutions</Badge>
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/15 border border-brand-blue/30 text-xs font-heading font-semibold text-brand-electric">
+          <span>⚡ Standalone Services or Full Digital Packages</span>
+        </div>
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white tracking-tight">
           Everything Your Business Needs to <br />
           <span className="text-gradient">Thrive Digitally.</span>
         </h1>
         <p className="text-base sm:text-lg text-brand-muted leading-relaxed font-body">
-          We combine software engineering, brand design, and data-driven marketing into unified digital solutions built for startups, businesses, and creators.
+          Hire us for individual specialized jobs—such as <strong>website creation only</strong>, <strong>video editing only</strong>, or <strong>promotional marketing</strong>—or combine them into a unified digital solution.
         </p>
       </div>
 

@@ -11,7 +11,6 @@ export const SITE_CONFIG = {
   navItems: [
     { label: 'Home', href: '/' },
     { label: 'Services', href: '/services' },
-    { label: 'Photography', href: '/services/photography' },
     { label: 'Our Work', href: '/work' },
     { label: 'About Us', href: '/about' },
     { label: 'Our Process', href: '/process' },
