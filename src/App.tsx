@@ -19,6 +19,7 @@ import { NotFound } from './pages/NotFound';
 import { CustomCursor } from './components/effects/CustomCursor';
 import { PageTracker } from './components/analytics/PageTracker';
 import { AdminPortal } from './pages/admin/AdminPortal';
+import { ContactFloatingPopup } from './components/layout/ContactFloatingPopup';
 
 const AppLayout: React.FC = () => {
   const location = useLocation();
@@ -65,6 +66,9 @@ const AppLayout: React.FC = () => {
 
             {/* Brand Footer */}
             <Footer />
+
+            {/* Floating Quick Contact Pop-up Button & Drawer */}
+            <ContactFloatingPopup />
           </div>
         </>
       )}

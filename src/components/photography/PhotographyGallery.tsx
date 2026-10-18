@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { PHOTOGRAPHY_PORTFOLIO, type PhotographyCategory, type PhotographyItem } from '../../data/photography';
 import { PhotographyLightbox } from './PhotographyLightbox';
 import { Badge } from '../ui/Badge';
-import { MapPin, Eye, ArrowUpRight } from 'lucide-react';
+import { MapPin, Eye, ArrowUpRight, Camera, MessageCircle } from 'lucide-react';
+import { getWhatsAppUrl } from '../../config/contact';
 
 interface PhotographyGalleryProps {
   onBookItem?: (item: PhotographyItem) => void;
@@ -45,6 +46,53 @@ export const PhotographyGallery: React.FC<PhotographyGalleryProps> = ({
       }
     }
   };
+
+  if (PHOTOGRAPHY_PORTFOLIO.length === 0) {
+    return (
+      <div className="p-8 sm:p-14 rounded-3xl glass-card border border-white/[0.08] text-center space-y-6 max-w-3xl mx-auto my-8">
+        <div className="w-16 h-16 rounded-2xl bg-brand-violet/20 text-brand-lavender border border-brand-violet/30 mx-auto flex items-center justify-center shadow-glow-sm">
+          <Camera className="w-8 h-8" />
+        </div>
+
+        <div className="space-y-2 max-w-xl mx-auto">
+          <span className="px-3 py-1 rounded-full text-xs font-mono font-medium bg-brand-violet/20 text-brand-lavender border border-brand-violet/30">
+            Portfolio In Progress
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-heading font-bold text-white pt-2">
+            Photography Portfolio Updating Soon
+          </h2>
+          <p className="text-sm sm:text-base text-brand-muted font-body leading-relaxed">
+            We are currently curating and uploading our newest client photo albums across product shoots, executive headshots, event coverage, and commercial campaigns.
+          </p>
+        </div>
+
+        <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] text-xs text-brand-lavender/90 max-w-md mx-auto">
+          Need to see photography samples in your specific category or book a date? Connect with us directly on WhatsApp.
+        </div>
+
+        <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
+          <a
+            href={getWhatsAppUrl('photography')}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366]/20 hover:bg-[#25D366]/30 text-[#25D366] text-xs font-heading font-semibold border border-[#25D366]/30 transition-all shadow-md shadow-[#25D366]/10"
+          >
+            <MessageCircle className="w-4 h-4" />
+            <span>Request Shoot Samples on WhatsApp</span>
+          </a>
+          <button
+            onClick={() => {
+              const el = document.getElementById('photoshoot-inquiry');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="px-5 py-2.5 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-heading font-semibold shadow-glow-sm transition-all"
+          >
+            Book a Photoshoot Below
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-10">

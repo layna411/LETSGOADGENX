@@ -4,6 +4,7 @@ import { Mail, Phone, MessageCircle, ArrowUpRight, Shield } from 'lucide-react';
 import { CONTACT_INFO, getWhatsAppUrl, getMailtoUrl } from '../../config/contact';
 import { SERVICES } from '../../data/services';
 import { SITE_CONFIG } from '../../config/site';
+import { SocialLinks } from '../ui/SocialLinks';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -42,11 +43,20 @@ export const Footer: React.FC = () => {
               A technology, creative design, and digital growth company helping startups, businesses, and institutions transform their ideas into high-performance digital products and memorable brands.
             </p>
 
-            <div className="pt-2">
-              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-heading font-medium bg-brand-blue/10 text-brand-lavender border border-brand-blue/20">
-                <span className="w-2 h-2 rounded-full bg-brand-electric animate-pulse" />
-                {CONTACT_INFO.tagline}
-              </span>
+            <div className="pt-2 flex flex-col gap-3.5">
+              <div>
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-heading font-medium bg-brand-blue/10 text-brand-lavender border border-brand-blue/20">
+                  <span className="w-2 h-2 rounded-full bg-brand-electric animate-pulse" />
+                  {CONTACT_INFO.tagline}
+                </span>
+              </div>
+
+              <div>
+                <span className="text-[11px] font-heading font-semibold uppercase tracking-wider text-white/50 block mb-2">
+                  Follow & Connect
+                </span>
+                <SocialLinks size="md" />
+              </div>
             </div>
           </div>
 

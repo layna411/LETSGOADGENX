@@ -141,8 +141,8 @@ export async function recordPageView(pathname: string): Promise<void> {
     } catch {
       // Ignore detailed view log errors
     }
-  } catch (err) {
-    console.debug('Visitor count tracking notice (will sync on connection):', err);
+  } catch {
+    // Ignore visitor tracking errors silently
   }
 }
 
@@ -181,7 +181,6 @@ export function subscribeToVisitorMetrics(
       }
     },
     (err) => {
-      console.warn('Realtime visitor metrics subscription error:', err);
       if (onError) onError(err);
     }
   );

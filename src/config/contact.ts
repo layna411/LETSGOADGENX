@@ -5,6 +5,45 @@ export interface PhoneContact {
   isPrimary?: boolean;
 }
 
+export interface SocialLink {
+  id: 'linkedin' | 'x' | 'instagram' | 'facebook';
+  name: string;
+  handle: string;
+  url: string;
+  ariaLabel: string;
+}
+
+export const SOCIAL_LINKS: readonly SocialLink[] = [
+  {
+    id: 'linkedin',
+    name: 'LinkedIn',
+    handle: 'letsgoadgenx',
+    url: 'https://www.linkedin.com/in/letsgoadgenx/',
+    ariaLabel: 'Connect with LetsGoAdGenX on LinkedIn',
+  },
+  {
+    id: 'x',
+    name: 'X (Twitter)',
+    handle: '@letsgoadgenx',
+    url: 'https://x.com/letsgoadgenx',
+    ariaLabel: 'Follow LetsGoAdGenX on X (Twitter)',
+  },
+  {
+    id: 'instagram',
+    name: 'Instagram',
+    handle: '@letsgoadgenx',
+    url: 'https://www.instagram.com/letsgoadgenx/',
+    ariaLabel: 'Follow LetsGoAdGenX on Instagram',
+  },
+  {
+    id: 'facebook',
+    name: 'Facebook',
+    handle: 'letsgoadgenx',
+    url: 'https://www.facebook.com/letsgoadgenx/',
+    ariaLabel: 'Follow LetsGoAdGenX on Facebook',
+  },
+] as const;
+
 export const CONTACT_INFO = {
   companyName: 'LetsGoAdGenX',
   brandName: 'ADGEN-X',
@@ -33,6 +72,12 @@ export const CONTACT_INFO = {
     },
   ],
   whatsappNumber: '919080104624',
+  socialLinks: {
+    linkedin: 'https://www.linkedin.com/in/letsgoadgenx/',
+    x: 'https://x.com/letsgoadgenx',
+    instagram: 'https://www.instagram.com/letsgoadgenx/',
+    facebook: 'https://www.facebook.com/letsgoadgenx/',
+  },
   tagline: 'BUILD. BRAND. GROW.',
   supportingTagline: 'Your Vision. Our Creativity. Your Growth.',
   headline: 'We Build Digital Experiences That Grow Businesses.',

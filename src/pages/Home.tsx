@@ -10,6 +10,7 @@ import { ServiceModal } from '../components/services/ServiceModal';
 import { ProjectCard } from '../components/portfolio/ProjectCard';
 import { ProjectModal } from '../components/portfolio/ProjectModal';
 import { HomePhotographySection } from '../components/home/HomePhotographySection';
+import { ClientMarquee } from '../components/home/ClientMarquee';
 import { DynamicIcon } from '../components/ui/DynamicIcon';
 import { SERVICES, type ServiceItem } from '../data/services';
 import { PROJECTS, type ProjectCategory, type ProjectItem } from '../data/projects';
@@ -159,6 +160,9 @@ export const Home: React.FC = () => {
           </div>
         </motion.div>
       </section>
+
+      {/* CLIENT ECOSYSTEM: MNC-GRADE INFINITE LEFT-TO-RIGHT MARQUEE */}
+      <ClientMarquee />
 
       {/* SECTION C: TRUST AND CAPABILITIES */}
       <section className="py-20 bg-brand-surface/40 border-y border-white/[0.06] relative">

@@ -82,7 +82,6 @@ export async function verifyAdminLogin(username: string, pass: string): Promise<
       error: 'Invalid Admin ID or Password. Access denied.',
     };
   } catch (err: any) {
-    console.error('Firestore admin login error:', err);
     if (err?.code === 'permission-denied' || err?.message?.includes('permission-denied')) {
       return {
         success: false,
@@ -117,7 +116,6 @@ export async function updateAdminCredentials(
     );
     return { success: true };
   } catch (err: any) {
-    console.error('Failed to update credentials in Firestore:', err);
     return {
       success: false,
       error: err?.message || 'Failed to update credentials in Firestore.',

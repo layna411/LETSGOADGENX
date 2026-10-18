@@ -213,16 +213,16 @@ export const PAGE_METADATA: Record<string, PageMetadata> = {
     ogType: 'website',
   },
   work: {
-    title: 'Our Work & Selected Case Studies | LetsGoAdGenX Portfolio',
+    title: 'Something Amazing Is Taking Shape | Our Work | LetsGoAdGenX',
     description:
-      'Explore digital products, brand identities, websites, and creative campaigns built by LetsGoAdGenX for businesses, startups, and institutions.',
+      'We’re crafting our next collection of digital experiences. Explore what is coming next from LetsGoAdGenX, or start your custom project with our engineering and design team.',
     canonicalPath: '/work',
     keywords: [
-      'LetsGoAdGenX portfolio',
-      'Client case studies',
-      'Website portfolio',
-      'App development examples',
-      'Design explorations',
+      'LetsGoAdGenX work',
+      'LetsGoAdGenX digital experiences',
+      'Web application development',
+      'Custom website design',
+      'Creative digital agency',
     ],
     ogImage: `${SITE_URL}/og-preview.jpg`,
     ogType: 'website',
@@ -315,6 +315,12 @@ export function getOrganizationSchema() {
       },
     ],
     areaServed: COMPANY_INFO.areaServed,
+    sameAs: [
+      'https://www.linkedin.com/in/letsgoadgenx/',
+      'https://x.com/letsgoadgenx',
+      'https://www.instagram.com/letsgoadgenx/',
+      'https://www.facebook.com/letsgoadgenx/',
+    ],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Professional Digital Services',

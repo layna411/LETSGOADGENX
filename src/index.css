@@ -96,3 +96,107 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #2f3554;
 }
+
+/* Infinite Marquee Animations for MNC-grade client tickers */
+@keyframes marquee-left-to-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+@keyframes marquee-right-to-left {
+  0% {
+    transform: translate3d(0%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-ltr {
+  display: flex;
+  width: max-content;
+  animation: marquee-left-to-right 55s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-rtl {
+  display: flex;
+  width: max-content;
+  animation: marquee-right-to-left 55s linear infinite;
+  will-change: transform;
+}
+
+.pause-on-hover:hover .animate-marquee-ltr,
+.pause-on-hover:hover .animate-marquee-rtl {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-ltr,
+  .animate-marquee-rtl {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Smooth transparent edge mask for marquee scrolling without solid overlays or dark color casting */
+.marquee-edge-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 12px,
+    #000 calc(100% - 12px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 12px,
+    #000 calc(100% - 12px),
+    transparent 100%
+  );
+}
+
+@media (min-width: 640px) {
+  .marquee-edge-mask {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      #000 36px,
+      #000 calc(100% - 36px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      #000 36px,
+      #000 calc(100% - 36px),
+      transparent 100%
+    );
+  }
+}
+
+@media (min-width: 1024px) {
+  .marquee-edge-mask {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      #000 64px,
+      #000 calc(100% - 64px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      #000 64px,
+      #000 calc(100% - 64px),
+      transparent 100%
+    );
+  }
+}
+
+

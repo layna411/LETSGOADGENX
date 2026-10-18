@@ -102,7 +102,6 @@ export function subscribeToInquiries(
       onData(items);
     },
     (err) => {
-      console.warn('Realtime inquiries subscription error, falling back to one-time query:', err);
       if (onError) onError(err);
     }
   );

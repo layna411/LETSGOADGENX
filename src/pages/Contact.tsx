@@ -4,6 +4,7 @@ import { CONTACT_INFO, getWhatsAppUrl, getMailtoUrl, type InquiryType } from '..
 import { ContactForm } from '../components/forms/ContactForm';
 import { SEOHead } from '../components/seo/SEOHead';
 import { PAGE_METADATA } from '../config/seo';
+import { SocialLinks } from '../components/ui/SocialLinks';
 
 export const Contact: React.FC = () => {
   const [copiedEmail, setCopiedEmail] = useState(false);
@@ -138,6 +139,22 @@ export const Contact: React.FC = () => {
                 </a>
               ))}
             </div>
+          </div>
+
+          {/* Official Social Media Channels */}
+          <div className="p-7 rounded-3xl glass-card border border-white/[0.08] space-y-4">
+            <div className="space-y-1">
+              <span className="text-[11px] font-mono font-medium text-brand-electric uppercase tracking-wider">
+                Official Channels
+              </span>
+              <h2 className="text-base font-heading font-bold text-white">
+                Connect on Social Media
+              </h2>
+              <p className="text-xs text-brand-muted font-body leading-relaxed">
+                Follow our official accounts for design showcases, tech updates, and creative reels.
+              </p>
+            </div>
+            <SocialLinks size="md" showLabels className="gap-2.5" />
           </div>
         </div>
 
